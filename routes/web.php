@@ -21,3 +21,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//......Klinik
+Route::get('/klinik', 'KlinikController@index')->name('klinik');
+Route::get('/klinik/add', 'KlinikController@add')->name('klinik-add');
+Route::post('/klinik/save', 'KlinikController@save')->name('klinik-save');
+Route::post('/delete/klinik', 'KlinikController@delete');
+Route::get('/detail/klinik/{id}', 'KlinikController@detail');
+Route::post('/update/klinik', 'KlinikController@update');
