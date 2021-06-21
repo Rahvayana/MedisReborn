@@ -17,6 +17,7 @@ class KlinikController extends Controller
             'users.klinik_name',
             'users.email', 'users.klinik_owner', 'users.klinik_owner_phone', 'users.klinik_permission',
             'users.klinik_address',
+            'users.photo',
             'users.klinik_phone',
             'users.klinik_therapist',
             'users.klinik_open_close',
@@ -31,8 +32,13 @@ class KlinikController extends Controller
     }
 
     public function save(Request $request){
+        $file = $request->file('foto_klinik');
+        $tujuan_upload = 'uploads/klinik';
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $file->move($tujuan_upload, $nama_file);
         $klinik = new User();
         $klinik->name = $request->klinik_name;
+        $klinik->photo = $nama_file;
         $klinik->klinik_name = $request->klinik_name;
         $klinik->klinik_owner = $request->owner_name;
         $klinik->klinik_owner_phone = $request->owner_phone;
