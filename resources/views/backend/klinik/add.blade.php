@@ -1,5 +1,8 @@
 @extends('layouts.backend')
 @section('title', 'Klinik add')
+@section('css')
+    <link rel="stylesheet" href="{{URL::asset('backend')}}/plugins/dropify/dropify.min.css">
+@endsection
 @section('content')
 <div class="row">
     <div class="col-12">
@@ -78,7 +81,7 @@
 
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-5">
             <hr>
             <p>Field Untuk Login Klinik</p>
             <fieldset class="form-group">
@@ -93,9 +96,30 @@
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </span>
         </div>
+        <div class="col-lg-5 col-md-5">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="text-black">Upload Foto Klinik</h4>
+              <label for="input-file-max-fs">Your so fresh input file</label>
+              <input type="file" id="input-file-max-fs" class="dropify" name="foto_klinik" required data-max-file-size="1M"/>
+            </div>
+          </div>
+        </div>
     </div>
 </form>
 
 
 
+@endsection
+
+@section('js')
+    <script src="{{URL::asset('backend')}}/plugins/dropify/dropify.min.js"></script>
+    <script>
+         $(document).ready(function(){
+                // Basic
+                $('.dropify').dropify();
+
+         });
+
+    </script>
 @endsection

@@ -30,3 +30,7 @@ Route::post('/klinik/save', 'KlinikController@save')->name('klinik-save');
 Route::post('/delete/klinik', 'KlinikController@delete');
 Route::get('/detail/klinik/{id}', 'KlinikController@detail');
 Route::post('/update/klinik', 'KlinikController@update');
+
+// FrontEnd
+Route::get('/page', 'FrontEndController@index')->name('frontend');
+Route::get('/page/search', 'FrontEndController@searchKlinik')->name('search-klinik');
