@@ -32,39 +32,46 @@ class KlinikController extends Controller
     }
 
     public function save(Request $request){
-        $file = $request->file('foto_klinik');
-        $tujuan_upload = 'uploads/klinik';
-        $nama_file = time() . "_" . $file->getClientOriginalName();
-        $file->move($tujuan_upload, $nama_file);
-        $klinik = new User();
-        $klinik->name = $request->klinik_name;
-        $klinik->photo = $nama_file;
-        $klinik->klinik_name = $request->klinik_name;
-        $klinik->klinik_owner = $request->owner_name;
-        $klinik->klinik_owner_phone = $request->owner_phone;
-        $klinik->klinik_permission = $request->permission;
-        $klinik->klinik_address = $request->address;
-        $klinik->klinik_phone = $request->klinik_phone;
-        $klinik->klinik_therapist = $request->therapiest;
-        $klinik->klinik_open_close = $request->open_close;
-        $klinik->klinik_time_per_day = $request->time_per_day;
+        $folderPath = public_path('uploads/klinik/');
 
-        // for login data
-        $klinik->password = Hash::make($request->password);;
-        $klinik->email = $request->email;
+        $image_parts = explode(";base64,", $request->iconMerk);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $filename = uniqid() . '.png';
+        $file = $folderPath . $filename;
+        $uploadMerkIcon = file_put_contents($file, $image_base64);
+        if ($uploadMerkIcon) {
+            $klinik = new User();
+            $klinik->name = $request->klinik_name;
+            $klinik->photo = 'klinik/' . $filename;
+            $klinik->klinik_name = $request->klinik_name;
+            $klinik->klinik_owner = $request->owner_name;
+            $klinik->klinik_owner_phone = $request->owner_phone;
+            $klinik->klinik_permission = $request->permission;
+            $klinik->klinik_address = $request->address;
+            $klinik->klinik_phone = $request->klinik_phone;
+            $klinik->klinik_therapist = $request->therapiest;
+            $klinik->klinik_open_close = $request->open_close;
+            $klinik->klinik_time_per_day = $request->time_per_day;
 
-        $klinik->save();
-        $lengTp = count($request->therapy);
-        for ($i=0; $i < $lengTp ; $i++) {
-            // dd($therapy[$i], $price[$i], $lengTp );
-            if($request->price[$i] != null && $request->therapy[$i] != null){
-                $therapy = new Therapy();
-                $therapy->price = $request->price[$i];
-                $therapy->therapy_name = $request->therapy[$i];
-                $therapy->user_id = $klinik->id;
-                $therapy->save();
+            // for login data
+            $klinik->password = Hash::make($request->password);;
+            $klinik->email = $request->email;
+
+            $klinik->save();
+            $lengTp = count($request->therapy);
+            for ($i=0; $i < $lengTp ; $i++) {
+                // dd($therapy[$i], $price[$i], $lengTp );
+                if($request->price[$i] != null && $request->therapy[$i] != null){
+                    $therapy = new Therapy();
+                    $therapy->price = $request->price[$i];
+                    $therapy->therapy_name = $request->therapy[$i];
+                    $therapy->user_id = $klinik->id;
+                    $therapy->save();
+                }
             }
+            return redirect()->route('klinik');
         }
-        return redirect()->route('klinik');
     }
 }
