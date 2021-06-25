@@ -23,6 +23,7 @@ class KlinikController extends Controller
             'users.klinik_open_close',
             'users.klinik_time_per_day',
             )
+            ->where('users.role', '=','KLINIK' )
             ->get();
         return view('backend.klinik.index', $data);
     }
@@ -54,6 +55,7 @@ class KlinikController extends Controller
             $klinik->klinik_therapist = $request->therapiest;
             $klinik->klinik_open_close = $request->open_close;
             $klinik->klinik_time_per_day = $request->time_per_day;
+            $klinik->role = "KLINIK";
 
             // for login data
             $klinik->password = Hash::make($request->password);;
@@ -66,7 +68,7 @@ class KlinikController extends Controller
                 if($request->price[$i] != null && $request->therapy[$i] != null){
                     $therapy = new Therapy();
                     $therapy->price = $request->price[$i];
-                    $therapy->therapy_name = $request->therapy[$i];
+                    $therapy->therapy_name = strtolower($request->therapy[$i]);
                     $therapy->user_id = $klinik->id;
                     $therapy->save();
                 }

@@ -70,14 +70,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         Pengobatan
-                        <input class="form-control" id="therapy-1" type="text" name="therapy[0]" placeholder="" required><br>
-                        <input class="form-control" id="therapy-2" type="text" name="therapy[1]" placeholder=""><br>
-                        <input class="form-control" id="therapy-3" type="text" name="therapy[2]" placeholder="">
+                        <input readonly="true" class="form-control" id="therapy-1" type="text" name="therapy[0]" placeholder="" value="akupuntur"><br>
+                        <input readonly="true" class="form-control" id="therapy-2" type="text" name="therapy[1]" placeholder="" value="pijat"><br>
+                        <input readonly="true" class="form-control" id="therapy-3" type="text" name="therapy[2]" placeholder="" value="bekam">
 
                     </div>
                     <div class="col-md-6">
                         Harga
-                        <input class="form-control" id="price-1" type="text" name="price[0]" placeholder="" required><br>
+                        <input class="form-control" id="price-1" type="text" name="price[0]" placeholder=""><br>
                         <input class="form-control" id="price-2" type="text" name="price[1]" placeholder=""><br>
                         <input class="form-control" id="price-3" type="text" name="price[2]" placeholder=""><br>
 
