@@ -19,6 +19,7 @@ class FrontEndController extends Controller
     public function searchAkupuntur() {
         $data['kliniks'] = DB::table('users')
             ->select(
+                'users.id',
                 'users.klinik_name',
                 'users.klinik_owner',
                 'users.klinik_owner_phone',
@@ -40,6 +41,7 @@ class FrontEndController extends Controller
     public function searchBekam() {
         $data['kliniks'] = DB::table('users')
             ->select(
+                'users.id',
                 'users.klinik_name',
                 'users.klinik_owner',
                 'users.klinik_owner_phone',
@@ -61,6 +63,7 @@ class FrontEndController extends Controller
     public function searchPijat() {
         $data['kliniks'] = DB::table('users')
             ->select(
+                'users.id',
                 'users.klinik_name',
                 'users.klinik_owner',
                 'users.klinik_owner_phone',

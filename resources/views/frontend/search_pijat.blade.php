@@ -68,7 +68,7 @@
                                         <td>
                                             Pemilik: &nbsp; {{$klinik->klinik_owner}}
                                         </td>
-                                        <td>
+                                        <td class="font-weight-bold">
                                             Jenis Terapi:&nbsp; {{$klinik->therapy_name}}
                                         </td>
                                     </tr>
@@ -91,7 +91,7 @@
                                 </table><br>
 
 
-                                <a href="#" class="btn btn-primary">BUTTON</a>
+                                <a href="/page/order/{{$klinik->id}}" class="btn btn-primary">BUTTON</a>
                             </div>
                         </div>
                     </div>

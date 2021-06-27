@@ -34,7 +34,12 @@ Route::get('/page/search', 'FrontEndController@searchKlinik')->name('search-klin
 Route::get('/page/search_akupuntur', 'FrontEndController@searchAkupuntur')->name('search-akupuntur');
 Route::get('/page/search_pijat', 'FrontEndController@searchPijat')->name('search-pijat');
 Route::get('/page/search_bekam', 'FrontEndController@searchBekam')->name('search-bekam');
-
 Auth::routes();
+Route::post('/page/order', 'OrderController@generate')->name('order-generate');
+Route::get('/page/order/payment/{order_id}', 'OrderController@paymentPage')->name('payment-order');
+Route::post('/page/order/payment/save', 'OrderController@paymentSave')->name('payment-save');
+Route::get('/page/order/after', 'OrderController@afterTransfer')->name('after-transfer');
+Route::get('/page/order/{klinik_id}', 'OrderController@orderPage')->name('order');
+
 
 // Route::get('/home', 'HomeController@index')->name('home');
