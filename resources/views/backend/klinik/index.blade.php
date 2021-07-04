@@ -45,7 +45,7 @@
                         <td>{{$klinik->klinik_therapist}}</td>
                         <td>{{$klinik->klinik_open_close}}</td>
                         <td>{{$klinik->klinik_time_per_day}}</td>
-                        <td><img src="{{URL::asset('uploads/klinik')}}/{{$klinik->photo}}" style="max-width: 80px;max-height: 80px;"></td>
+                        <td><img src="{{URL::asset('uploads')}}/{{$klinik->photo}}" style="max-width: 80px;max-height: 80px;"></td>
                     </tr>
                     {{$no++}}
                     @endforeach
