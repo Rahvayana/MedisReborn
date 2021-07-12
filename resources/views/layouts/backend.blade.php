@@ -59,7 +59,7 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <!-- User Account: style can be found in dropdown.less -->
-                        <li class="dropdown user user-menu p-ph-res"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="{{URL::asset('backend')}}/img/img1.jpg" class="user-image" alt="User Image"> <span class="hidden-xs">Alexander Pierce</span> </a>
+                        <li class="dropdown user user-menu p-ph-res"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="{{URL::asset('backend')}}/img/img1.jpg" class="user-image" alt="User Image"> <span class="hidden-xs">{{Auth::user()->name}}</span> </a>
                         </li>
                     </ul>
                 </div>
@@ -77,11 +77,23 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="active treeview"> <a href="#"> <i class="fa fa-home"></i> <span>Dashboard</span> </a>
                     </li>
-                    <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>User</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+                    @if (Auth::user()->role=='ADMIN')
+                    <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Admin</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
-                            <li><a href="apps-calendar.html">Admin</a></li>
-                            <li><a href="/klinik">Klinik</a></li>
+                            <li><a href="{{ route('klinik') }}">List Klinik</a></li>
+                            <li><a href="apps-contacts.html">Transaksi</a></li>
+                        </ul>
+                    </li>  
+                    @endif
+                    <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Klinik</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ route('klinik') }}">List Klinik</a></li>
                             <li><a href="apps-contacts.html">Pasien</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Pasien</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+                        <ul class="treeview-menu">
+                            <li><a href="apps-calendar.html">List Pasien</a></li>
                         </ul>
                     </li>
                 </ul>

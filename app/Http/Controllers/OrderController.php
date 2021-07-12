@@ -14,7 +14,7 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
     //
-    public function orderPage($klinik_id){
+    public function orderPage($klinik_id,$jenis_klinik){
         $klinik_id = (int)$klinik_id;
         $data["klinik"] = DB::table('users')
             ->select(
@@ -30,11 +30,15 @@ class OrderController extends Controller
 
         $data["therapy"] = Therapy::where('user_id', $klinik_id)
             ->get();
+        $data["jenis_terapi"]=$jenis_klinik;
+        $data["jam"]=['08:00-09:00','09:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00'];
+        // dd($data);
         return view('frontend.order.index', $data);
 
     }
 
     public function generate(Request $request){
+        
         $orderId ="TRF" . str_replace("-","" ,$request->tanggal) .strtotime(now());
         $therapy = Therapy::where('id', (int)$request->jenis_pengobatan)->first();
         $order = new Order();

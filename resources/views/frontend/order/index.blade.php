@@ -37,7 +37,11 @@
                                     <select class="form-control custom-select" name="jenis_pengobatan" required>
                                         <option value="" selected disabled>Pilih Pengobatan</option>
                                         @foreach($therapy as $t)
-                                        <option value="{{$t->id}}">{{$t->therapy_name}}  &nbsp&nbsp&nbsp | &nbsp Rp. {{number_format($t->price,2,',','.')}} </option>
+                                        @if ($t->therapy_name==$jenis_terapi)
+                                            <option selected value="{{$t->id}}">{{$t->therapy_name}}  &nbsp&nbsp&nbsp | &nbsp Rp. {{number_format($t->price,2,',','.')}} </option>
+                                        @else
+                                            <option value="{{$t->id}}">{{$t->therapy_name}}  &nbsp&nbsp&nbsp | &nbsp Rp. {{number_format($t->price,2,',','.')}} </option>
+                                        @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -54,7 +58,12 @@
                             <fieldset class="form-group row">
                                 <label class="control-label text-right col-md-3 font-weight-bold">Waktu Pengobatan</label>
                                 <div class="col-md-7">
-                                    <input class="form-control" id="time" type="text" readonly="true" name="time" placeholder="akan diverifikasi oleh admin" required>
+                                    <select name="time" id="time" class="form-control">
+                                        @for ($i = 0; $i < $klinik->klinik_time_per_day; $i++)
+                                        <option value="{{$jam[$i]}}">{{$jam[$i]}}</option>
+                                        @endfor
+                                    </select>
+                                    
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">

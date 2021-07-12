@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/admin', function () {
+
     return view('backend.admin.index');
 });
 
@@ -22,6 +23,7 @@ Auth::routes();
 
 //......Klinik
 Route::get('/admin/klinik', 'KlinikController@index')->name('klinik');
+Route::get('/admin/klinik-detail/{id}', 'KlinikController@detail')->name('klinik.detail');
 Route::get('/admin/klinik/add', 'KlinikController@add')->name('klinik-add');
 Route::post('/admin/klinik/save', 'KlinikController@save')->name('klinik-save');
 Route::post('/admin/delete/klinik', 'KlinikController@delete');
@@ -39,7 +41,7 @@ Route::post('/page/order', 'OrderController@generate')->name('order-generate');
 Route::get('/page/order/payment/{order_id}', 'OrderController@paymentPage')->name('payment-order');
 Route::post('/page/order/payment/save', 'OrderController@paymentSave')->name('payment-save');
 Route::get('/page/order/after', 'OrderController@afterTransfer')->name('after-transfer');
-Route::get('/page/order/{klinik_id}', 'OrderController@orderPage')->name('order');
+Route::get('/page/order/{klinik_id}/{jenis_klinik}', 'OrderController@orderPage')->name('order');
 
 
 // Route::get('/home', 'HomeController@index')->name('home');

@@ -28,6 +28,12 @@ class KlinikController extends Controller
         return view('backend.klinik.index', $data);
     }
 
+    public function detail($id)
+    {
+        $data['klinik']=User::where('role',"KLINIK")->where('id',$id)->first();
+        return view('backend.klinik.detail',$data);
+    }
+
     public function add(){
         return view('backend.klinik.add');
     }

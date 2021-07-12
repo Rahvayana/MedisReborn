@@ -91,7 +91,7 @@
                                 </table><br>
 
 
-                                <a href="/page/order/{{$klinik->id}}" class="btn btn-primary">BUTTON</a>
+                                <a href="/page/order/{{$klinik->id}}/{{$klinik->therapy_name}}" class="btn btn-primary">PESAN</a>
                             </div>
                         </div>
                     </div>
