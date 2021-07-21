@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -29,4 +31,33 @@ class AdminController extends Controller
         $order->save();
         return back();
     }
+
+    public function pasien()
+    {
+        $data['pasiens']=DB::table('users')->where('role','PASIEN')->get();
+        return view('backend.pasien.index',$data);
+    }
+
+
+    public function listpasien()
+    {
+        if(Auth::user()->role=='KLINIK'){
+            $data['pasiens']=DB::table('orders')
+            ->select('orders.*','users.name','users.email')
+            ->leftJoin('users','users.id','orders.user_id')
+            ->where('total_payment','Sukses')
+            ->where('tanggal_pengobatan', '>=', date('Y-m-d'))
+            ->where('klinik_id',Auth::id())->get();
+        }else{
+            $data['pasiens']=DB::table('orders')
+            ->select('orders.*','users.name','users.email')
+            ->leftJoin('users','users.id','orders.user_id')
+            ->where('total_payment','Sukses')
+            ->where('tanggal_pengobatan', '>=', date('Y-m-d'))->get();
+        }
+        // dd($data);
+        return view('backend.pasien.listpasien',$data);
+    }
+
+
 }

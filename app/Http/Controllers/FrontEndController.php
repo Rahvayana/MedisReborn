@@ -14,6 +14,15 @@ class FrontEndController extends Controller
         return view('frontend.index');
     }
 
+    public function auth()
+    {
+        if(Auth::user()->role=='PASIEN'){
+            return redirect()->route('landing');
+        }else{
+            return redirect()->route('klinik');
+        }
+    }
+
     public function profile()
     {
         $data['user']=Auth::user();

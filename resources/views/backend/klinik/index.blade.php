@@ -2,12 +2,16 @@
 @section('title', 'Klinik')
 @section('content')
 <div class="row">
+    @if (Auth::user()->role=='ADMIN')
     <div class="col-12">
         <h4 class="text-black">List</h4>
         <span class="m-3 pull-right">
             <a href="{{ route('klinik-add')}}" class="btn btn-rounded btn-success">Tambah</a>
         </span>
     </div>
+    @else
+        
+    @endif
 </div>
 <div class="row">
     <div class="col-12">

@@ -84,16 +84,16 @@
                             <li><a href="{{ route('admin.transaksi') }}">Transaksi</a></li>
                         </ul>
                     </li>  
-                    @endif
                     <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Klinik</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ route('klinik') }}">List Klinik</a></li>
-                            <li><a href="apps-contacts.html">Pasien</a></li>
+                            <li><a href="{{ route('pasien') }}">Pasien</a></li>
                         </ul>
                     </li>
+                    @endif
                     <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Pasien</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
-                            <li><a href="apps-calendar.html">List Pasien</a></li>
+                            <li><a href="{{ route('pasien.list') }}">List Pasien</a></li>
                         </ul>
                     </li>
                 </ul>

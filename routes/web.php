@@ -35,6 +35,13 @@ Route::post('/admin/delete/klinik', 'KlinikController@delete');
 Route::get('/admin/detail/klinik/{id}', 'KlinikController@detail');
 Route::post('/admin/update/klinik', 'KlinikController@update');
 
+//PASIEN
+Route::get('/pasien', 'AdminController@pasien')->name('pasien');
+Route::get('/listpasien', 'AdminController@listpasien')->name('pasien.list');
+
+//Cek Route 
+Route::get('/check', 'FrontEndController@auth')->name('auth');
+
 // FrontEnd
 Route::get('/', 'FrontEndController@index')->name('landing');
 Route::get('/profile', 'FrontEndController@profile')->name('profile');
