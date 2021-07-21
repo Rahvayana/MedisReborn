@@ -68,7 +68,7 @@
                             <fieldset class="form-group row">
                                 <label class="control-label text-right col-md-3 font-weight-bold">Total Pembayaran</label>
                                 <div class="col-md-7">
-                                    {{ $order->therapy_price }}
+                                    Rp. {{ number_format($order->therapy_price )}}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
@@ -77,11 +77,17 @@
                                     {{ $order->tanggal_pengobatan }}
                                 </div>
                             </fieldset>
+                            <fieldset class="form-group row">
+                                <label class="control-label text-right col-md-3 font-weight-bold">No Urut</label>
+                                <div class="col-md-7">
+                                    {{ $order->no_urut }}
+                                </div>
+                            </fieldset>
 
                             <fieldset class="form-group row">
                                 <label class="control-label text-right col-md-3 font-weight-bold">Waktu Pengobatan</label>
                                 <div class="col-md-7">
-                                    akan diverifikasi oleh admin setelah anda melakukan pembayaran
+                                    {{ $order->jam_pengobatan }}
                                 </div>
                             </fieldset>
 
@@ -188,7 +194,7 @@
 
         $modal.on('shown.bs.modal', function () {
             cropper = new Cropper(image, {
-                aspectRatio: 16 / 16,
+                aspectRatio: 16 / 4,
                 viewMode: 3,
                 preview: '.preview'
             });

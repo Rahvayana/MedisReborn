@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Therapy;
 use App\Models\User;
 use App\Models\Order;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+
 class OrderController extends Controller
 {
     public function __construct(){
@@ -31,13 +32,20 @@ class OrderController extends Controller
         $data["therapy"] = Therapy::where('user_id', $klinik_id)
             ->get();
         $data["jenis_terapi"]=$jenis_klinik;
-        $data["jam"]=['08:00-09:00','09:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00'];
+        $data["jam"]=['08:00-09:00','09:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00'];
         // dd($data);
         return view('frontend.order.index', $data);
 
     }
 
-    public function generate(Request $request){
+    public function generate(Request $request)
+    {
+        // dd($request);
+        $no_urut=DB::table('orders')
+        ->where('klinik_id',$request->klinik_id)
+        ->where('jam_pengobatan',$request->time)
+        ->whereDate('tanggal_pengobatan',date('Y-m-d',strtotime($request->tanggal)))
+        ->get();
         
         $orderId ="TRF" . str_replace("-","" ,$request->tanggal) .strtotime(now());
         $therapy = Therapy::where('id', (int)$request->jenis_pengobatan)->first();
@@ -49,6 +57,8 @@ class OrderController extends Controller
         $order->klinik_name = $request->klinik_name;
         $order->therapy_price = $therapy->price;
         $order->tanggal_pengobatan = $request->tanggal;
+        $order->jam_pengobatan = $request->time;
+        $order->no_urut = count($no_urut)+1;
         $order->klinik_id = $request->klinik_id;
         $order->user_id = Auth::user()->id;
         $order->save();
@@ -58,6 +68,7 @@ class OrderController extends Controller
 
     public function paymentPage($order_id){
         $data['order'] = Order::where('order_id', $order_id)->first();
+        // dd($data);
         return view('frontend.order.payment', $data);
     }
 

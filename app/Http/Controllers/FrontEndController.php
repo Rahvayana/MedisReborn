@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FrontEndController extends Controller
@@ -10,6 +12,20 @@ class FrontEndController extends Controller
     //
     public function index(){
         return view('frontend.index');
+    }
+
+    public function profile()
+    {
+        $data['user']=Auth::user();
+        $data['orders']=Order::where('user_id',Auth::id())->get();
+        // dd($data);
+        return view('frontend.user',$data);
+    }
+
+    public function detail($id)
+    {
+        $data['order']=Order::find($id);
+        return view('frontend.detail',$data);
     }
 
     public function searchKlinik() {

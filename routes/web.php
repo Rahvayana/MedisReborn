@@ -14,13 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin', function () {
+// Route::get('/admin', function () {
 
-    return view('backend.admin.index');
-});
+//     return view('backend.admin.index');
+// });
 
 Auth::routes();
 
+//......Admin
+Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/transaksi', 'AdminController@transaksi')->name('admin.transaksi');
+Route::get('/transaksi/{id}', 'AdminController@detail')->name('admin.detail');
+Route::get('/transaksi-confirm/{id}', 'AdminController@konfirmasi')->name('admin.transaksi.confirm');
 //......Klinik
 Route::get('/admin/klinik', 'KlinikController@index')->name('klinik');
 Route::get('/admin/klinik-detail/{id}', 'KlinikController@detail')->name('klinik.detail');
@@ -32,6 +37,8 @@ Route::post('/admin/update/klinik', 'KlinikController@update');
 
 // FrontEnd
 Route::get('/', 'FrontEndController@index')->name('landing');
+Route::get('/profile', 'FrontEndController@profile')->name('profile');
+Route::get('/transaksi-detail/{id}', 'FrontEndController@detail')->name('profile.transaksi');
 Route::get('/page/search', 'FrontEndController@searchKlinik')->name('search-klinik');
 Route::get('/page/search_akupuntur', 'FrontEndController@searchAkupuntur')->name('search-akupuntur');
 Route::get('/page/search_pijat', 'FrontEndController@searchPijat')->name('search-pijat');

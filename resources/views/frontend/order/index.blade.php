@@ -22,7 +22,7 @@
                             <fieldset class="form-group row">
                                 <label class="control-label text-right col-md-3 font-weight-bold">Nama</label>
                                 <div class="col-md-7">
-                                    <input class="form-control" id="name" type="text" name="name" placeholder="" required>
+                                    <input class="form-control" id="name" type="text" value="{{Auth::user()->name}}" name="name" placeholder="" required>
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">

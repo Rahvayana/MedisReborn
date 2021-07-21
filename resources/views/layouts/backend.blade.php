@@ -81,7 +81,7 @@
                     <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Admin</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ route('klinik') }}">List Klinik</a></li>
-                            <li><a href="apps-contacts.html">Transaksi</a></li>
+                            <li><a href="{{ route('admin.transaksi') }}">Transaksi</a></li>
                         </ul>
                     </li>  
                     @endif

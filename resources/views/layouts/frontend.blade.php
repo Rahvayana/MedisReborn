@@ -90,6 +90,11 @@
                     </form>
                 </div>
             </span>
+            <span class="nav-item">
+                <a href="{{ route('profile') }}">
+                   Profile
+                </a>
+            </span>
             @endguest
     </div>
 
