@@ -60,6 +60,20 @@
                     <ul class="nav navbar-nav">
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu p-ph-res"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="{{URL::asset('backend')}}/img/img1.jpg" class="user-image" alt="User Image"> <span class="hidden-xs">{{Auth::user()->name}}</span> </a>
+                            <ul class="dropdown-menu">
+                              <li class="user-header">
+                                <div class="pull-left user-img"><img src="{{URL::asset('backend')}}/img/img1.jpg" class="img-responsive" alt="User"></div>
+                                <p class="text-left">{{Auth::user()->name}}<small>{{Auth::user()->email}}</small> </p>
+                              </li>
+                              <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i>
+                                {{ __('Logout') }}
+                                </a>
+                              </li>
+                              
+                              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                  @csrf
+                              </form>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -75,27 +89,38 @@
 
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="active treeview"> <a href="#"> <i class="fa fa-home"></i> <span>Dashboard</span> </a>
+                    <li class="{{ Route::currentRouteNamed('admin') ? 'active' : '' }}"> <a href="{{ route('admin') }}"> <i class="fa fa-home"></i> <span>Dashboard</span></a>
                     </li>
                     @if (Auth::user()->role=='ADMIN')
-                    <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Admin</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+                    <li class="treeview {{ Route::currentRouteNamed('klinik*') ? 'active' : '' }}"> <a href="#"> <i class="fa fa-drivers-license"></i> <span>Admin</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('klinik') }}">List Klinik</a></li>
-                            <li><a href="{{ route('admin.transaksi') }}">Transaksi</a></li>
+                            <li class="{{ Route::currentRouteNamed('klinik') ? 'active' : '' }}"><a href="{{ route('klinik') }}">List Klinik</a></li>
+                            <li class="{{ Route::currentRouteNamed('admin.transaksi') ? 'active' : '' }}"><a href="{{ route('admin.transaksi') }}">Transaksi</a></li>
+                            <li class="{{ Route::currentRouteNamed('laporan.keuangan') ? 'active' : '' }}"><a href="{{ route('laporan.keuangan') }}">Laporan Keuangan</a></li>
                         </ul>
                     </li>  
-                    <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Klinik</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+                    <li class="treeview"> <a href="#"> <i class="fa  fa-hospital-o"></i> <span>Klinik</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ route('klinik') }}">List Klinik</a></li>
                             <li><a href="{{ route('pasien') }}">Pasien</a></li>
                         </ul>
                     </li>
                     @endif
-                    <li class="treeview"> <a href="#"> <i class="fa fa-user"></i> <span>Pasien</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+                    <li class="treeview"> <a href="#"> <i class="fa  fa-stethoscope"></i> <span>Pasien</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ route('pasien.list') }}">List Pasien</a></li>
+                            @if (Auth::user()->role=='KLINIK')
+                            <li><a href="{{ route('laporan.keuangan') }}">Laporan Keuangan</a></li>
+                            @endif
                         </ul>
                     </li>
+                    @if (Auth::user()->role=='ADMIN')
+                    <li class="treeview"> <a href="#"> <i class="fa fa-user-circle-o"></i> <span>Customer</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ route('pasien') }}">List Customer</a></li>
+                        </ul>
+                    </li>
+                    @endif
                 </ul>
             </div>
             <!-- /.sidebar -->

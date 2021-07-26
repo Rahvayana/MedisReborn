@@ -3,18 +3,6 @@
 
 <div class="album py-5 bg-light">
     <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label for="carimedis">Cari</label>
-                    <input type="text" class="form-control" id="carimedis" placeholder="Cari Pengobatan">
-                  </div>
-            </div>
-            <div class="col-md-2">
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-4">

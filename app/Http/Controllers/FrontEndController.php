@@ -11,6 +11,21 @@ class FrontEndController extends Controller
 {
     //
     public function index(){
+        $data=DB::select(DB::raw('SELECT 
+        id, 
+        (
+           3959 *
+           acos(cos(radians(37)) * 
+           cos(radians(latitude)) * 
+           cos(radians(longitude) - 
+           radians(-122)) + 
+           sin(radians(37)) * 
+           sin(radians(latitude )))
+        ) AS distance 
+        FROM clinics 
+        HAVING distance > 2 
+        ORDER BY distance LIMIT 0, 20;'));
+        // dd($data);
         return view('frontend.index');
     }
 
@@ -41,7 +56,7 @@ class FrontEndController extends Controller
         return view('frontend.search_klinik');
     }
 
-    public function searchAkupuntur() {
+    public function searchAkupuntur($slug) {
         $data['kliniks'] = DB::table('users')
             ->select(
                 'users.id',

@@ -25,15 +25,6 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('photo')->nullable();
-            $table->string('klinik_name')->nullable();
-            $table->string('klinik_owner')->nullable();
-            $table->string('klinik_owner_phone')->nullable();
-            $table->string('klinik_permission')->nullable();
-            $table->string('klinik_address')->nullable();
-            $table->string('klinik_phone')->nullable();
-            $table->integer('klinik_therapist')->nullable();
-            $table->string('klinik_open_close')->nullable();
-            $table->string('klinik_time_per_day')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

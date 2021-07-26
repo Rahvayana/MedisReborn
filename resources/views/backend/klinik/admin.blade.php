@@ -6,7 +6,7 @@
 <div class="content"> 
   <!-- Small boxes (Stat box) -->
   <div class="row">
-    <div class="col-lg-3 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-sm-6 col-xs-12">
       <div class="info-box bg-darkblue"> <span class="info-box-icon bg-transparent"><i class="ti-stats-up text-white"></i></span>
         <div class="info-box-content">
           <h6 class="info-box-text text-white">Pasien Hari Ini</h6>
@@ -17,7 +17,7 @@
     </div>
     </div>
     <!-- /.col -->
-    <div class="col-lg-3 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-sm-6 col-xs-12">
       <div class="info-box bg-green text-white"> <span class="info-box-icon bg-transparent"><i class="ti-face-smile"></i></span>
         <div class="info-box-content">
           <h6 class="info-box-text text-white">Total Pasien</h6>
@@ -28,18 +28,7 @@
     </div>
     </div>
     <!-- /.col -->
-    <div class="col-lg-3 col-sm-6 col-xs-12">
-      <div class="info-box bg-aqua"> <span class="info-box-icon bg-transparent"><i class="ti-bar-chart"></i></span>
-        <div class="info-box-content">
-          <h6 class="info-box-text text-white">Total Klinik</h6>
-          <h1 class="text-white">{{$klinik}}</h1>
-        <!-- /.info-box-content --> 
-      </div>
-      <!-- /.info-box --> 
-      </div>
-    </div>
-    <!-- /.col -->
-    <div class="col-lg-3 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-sm-6 col-xs-12">
       <div class="info-box bg-orange"> <span class="info-box-icon bg-transparent"><i class="ti-money"></i></span>
         <div class="info-box-content">
           <h6 class="info-box-text text-white">Total Transaksi</h6>

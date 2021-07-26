@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Clinic;
 use App\Models\User;
 use App\Models\Therapy;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,15 +17,16 @@ class KlinikController extends Controller
     public function index(){
         $data['kliniks'] = DB::table('users')
             ->select('users.id',
-            'users.klinik_name',
-            'users.email', 'users.klinik_owner', 'users.klinik_owner_phone', 'users.klinik_permission',
-            'users.klinik_address',
-            'users.photo',
-            'users.klinik_phone',
-            'users.klinik_therapist',
-            'users.klinik_open_close',
-            'users.klinik_time_per_day',
+            'clinics.klinik_name',
+            'users.email', 'clinics.klinik_owner', 'clinics.klinik_owner_phone', 'clinics.klinik_permission',
+            'clinics.klinik_address',
+            'clinics.photo',
+            'clinics.klinik_phone',
+            'clinics.klinik_therapist',
+            'clinics.klinik_open_close',
+            'clinics.klinik_time_per_day',
             )
+            ->leftJoin('clinics','users.id','clinics.user_id')
             ->where('users.role', '=','KLINIK' )
             ->get();
         return view('backend.klinik.index', $data);
@@ -30,47 +34,64 @@ class KlinikController extends Controller
 
     public function detail($id)
     {
-        $data['klinik']=User::where('role',"KLINIK")->where('id',$id)->first();
+        $data['klinik']=DB::table('users')
+        ->select('users.id','users.name',
+        'clinics.klinik_name',
+        'users.email', 'clinics.klinik_owner', 'clinics.klinik_owner_phone', 'clinics.klinik_permission',
+        'clinics.klinik_address',
+        'clinics.photo',
+        'clinics.klinik_phone',
+        'clinics.klinik_therapist',
+        'clinics.klinik_open_close',
+        'clinics.klinik_time_per_day',
+        )
+        ->leftJoin('clinics','users.id','clinics.user_id')
+        ->where('users.id',$id)->first();
         return view('backend.klinik.detail',$data);
     }
 
     public function add(){
-        return view('backend.klinik.add');
+        return view('backend.klinik.create');
     }
 
     public function save(Request $request){
+        // dd($request);
         $folderPath = public_path('uploads/klinik/');
 
-        $image_parts = explode(";base64,", $request->iconMerk);
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
-        $image_base64 = base64_decode($image_parts[1]);
-        $filename = uniqid() . '.png';
-        $file = $folderPath . $filename;
-        $uploadMerkIcon = file_put_contents($file, $image_base64);
-        if ($uploadMerkIcon) {
+        $file = $request->file('foto_klinik');
+        $fileName=time().'.'.$file->getClientOriginalExtension();
+        if ($request->hasFile('foto_klinik')) {
+            $path = public_path().'/uploads/klinik/';
+            // dd($path);
+            $file->move($path,$fileName);
+        }
             $klinik = new User();
             $klinik->name = $request->klinik_name;
-            $klinik->photo = 'klinik/' . $filename;
-            $klinik->klinik_name = $request->klinik_name;
-            $klinik->klinik_owner = $request->owner_name;
-            $klinik->klinik_owner_phone = $request->owner_phone;
-            $klinik->klinik_permission = $request->permission;
-            $klinik->klinik_address = $request->address;
-            $klinik->klinik_phone = $request->klinik_phone;
-            $klinik->klinik_therapist = $request->therapiest;
-            $klinik->klinik_open_close = $request->open_close;
-            $klinik->klinik_time_per_day = $request->time_per_day;
-            $klinik->role = "KLINIK";
-
             // for login data
+            $klinik->role = "KLINIK";
             $klinik->password = Hash::make($request->password);;
             $klinik->email = $request->email;
-
             $klinik->save();
+
+            $clinic=new Clinic();
+            $clinic->user_id = $klinik->id;
+            $clinic->photo = 'klinik/' . $fileName;
+            $clinic->klinik_name = $request->klinik_name;
+            $clinic->klinik_owner = $request->owner_name;
+            $clinic->klinik_owner_phone = $request->owner_phone;
+            $clinic->klinik_permission = $request->permission;
+            $clinic->klinik_address = $request->address;
+            $clinic->klinik_phone = $request->klinik_phone;
+            $clinic->klinik_therapist = $request->therapiest;
+            $clinic->klinik_open_close = $request->open_close;
+            $clinic->klinik_time_per_day = $request->time_per_day;
+            $clinic->latitude = $request->latitude;
+            $clinic->longitude = $request->longitude;
+            $clinic->save();
+
             $lengTp = count($request->therapy);
             for ($i=0; $i < $lengTp ; $i++) {
-                // dd($therapy[$i], $price[$i], $lengTp );
+                // dd($request->therapy[$i] );
                 if($request->price[$i] != null && $request->therapy[$i] != null){
                     $therapy = new Therapy();
                     $therapy->price = $request->price[$i];
@@ -80,6 +101,53 @@ class KlinikController extends Controller
                 }
             }
             return redirect()->route('klinik');
-        }
+    }
+
+    public function laporan(Request $request)
+    {
+        // dd(date('Y-m-d', strtotime("-7 days")));
+        $data['orders'] = DB::table('orders')
+            ->where(function ($query) use ($request) {
+                if(Auth::user()->role=='KLINIK'){
+                    $query->where('klinik_id',Auth::id());
+                }
+                
+                if ($request->date == "Hari Ini") {
+                    $query->whereDate('updated_at',date('Y-m-d'));
+                }
+                elseif($request->date == "Seminggu"){
+                    $query->whereDate('updated_at','>',date('Y-m-d', strtotime("-7 days")));
+                }
+                elseif($request->date == "Sebulan"){
+                    $query->whereDate('updated_at','>',date('Y-m-d', strtotime("-30 days")));
+                }else{
+                    
+                }
+            })
+            // ->sum('therapy_price');
+            ->get();
+        $data['sum'] = DB::table('orders')
+            ->where(function ($query) use ($request) {
+                if(Auth::user()->role=='KLINIK'){
+                    $query->where('klinik_id',Auth::id());
+                }
+
+                if ($request->date == "Hari Ini") {
+                    $query->whereDate('updated_at',date('Y-m-d'));
+                }
+                elseif($request->date == "Seminggu"){
+                    $query->whereDate('updated_at','>',date('Y-m-d', strtotime("-7 days")));
+                }
+                elseif($request->date == "Sebulan"){
+                    $query->whereDate('updated_at','>',date('Y-m-d', strtotime("-30 days")));
+                }else{
+                    
+                }
+            })
+            ->sum('therapy_price');
+
+            // dd($data);
+
+        return view('backend.admin.laporan',$data);
     }
 }

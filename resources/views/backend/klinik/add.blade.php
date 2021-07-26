@@ -28,7 +28,6 @@
         <h4 class="text-black">Form Input Mitra Klinik</h4>
         <span class="m-3 pull-right">
         </span>
-        <p>Add <code class="highlighter-rouge">.table-hover</code> to enable a hover state on table rows within a <code class="highlighter-rouge">&lt;tbody&gt;</code>.</p>
     </div>
 </div>
 <form action="{{route('klinik-save')}}" method="POST" enctype="multipart/form-data">
@@ -70,9 +69,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         Pengobatan
-                        <input readonly="true" class="form-control" id="therapy-1" type="text" name="therapy[0]" placeholder="" value="akupuntur"><br>
-                        <input readonly="true" class="form-control" id="therapy-2" type="text" name="therapy[1]" placeholder="" value="pijat"><br>
-                        <input readonly="true" class="form-control" id="therapy-3" type="text" name="therapy[2]" placeholder="" value="bekam">
+                        <input class="form-control" id="therapy-1" type="text" name="therapy[0]" placeholder="" value="akupuntur"><br>
+                        <input class="form-control" id="therapy-2" type="text" name="therapy[1]" placeholder="" value="pijat"><br>
+                        <input class="form-control" id="therapy-3" type="text" name="therapy[2]" placeholder="" value="bekam">
 
                     </div>
                     <div class="col-md-6">

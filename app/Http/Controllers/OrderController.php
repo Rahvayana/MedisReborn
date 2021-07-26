@@ -8,6 +8,7 @@ use App\Models\Therapy;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
@@ -32,7 +33,7 @@ class OrderController extends Controller
         $data["therapy"] = Therapy::where('user_id', $klinik_id)
             ->get();
         $data["jenis_terapi"]=$jenis_klinik;
-        $data["jam"]=['08:00-09:00','09:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00'];
+        $data["jam"]=['08:00-09:00','09:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00'];
         // dd($data);
         return view('frontend.order.index', $data);
 
@@ -41,6 +42,18 @@ class OrderController extends Controller
     public function generate(Request $request)
     {
         // dd($request);
+        $bed=DB::table('users')->select('klinik_therapist')->where('id',$request->klinik_id)->first();
+
+        $total=DB::table('orders')
+        ->where('klinik_id',$request->klinik_id)
+        ->where('total_payment','Sukses')
+        ->where('jam_pengobatan',$request->time)
+        ->whereDate('tanggal_pengobatan',date('Y-m-d',strtotime($request->tanggal)))
+        ->get();
+        // dd($bed->klinik_therapist);
+        if(count($total)>$bed->klinik_therapist){
+            return Redirect::back()->withErrors('Pilih Jam Lain atau Jam yang Sama Pada Tanggal Yang Lain');
+        }
         $no_urut=DB::table('orders')
         ->where('klinik_id',$request->klinik_id)
         ->where('jam_pengobatan',$request->time)

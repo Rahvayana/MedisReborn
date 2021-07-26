@@ -35,6 +35,9 @@ Route::post('/admin/delete/klinik', 'KlinikController@delete');
 Route::get('/admin/detail/klinik/{id}', 'KlinikController@detail');
 Route::post('/admin/update/klinik', 'KlinikController@update');
 
+
+Route::match(['get', 'post'], '/admin/laporan', 'KlinikController@laporan')->name('laporan.keuangan');
+
 //PASIEN
 Route::get('/pasien', 'AdminController@pasien')->name('pasien');
 Route::get('/listpasien', 'AdminController@listpasien')->name('pasien.list');
@@ -47,7 +50,8 @@ Route::get('/', 'FrontEndController@index')->name('landing');
 Route::get('/profile', 'FrontEndController@profile')->name('profile');
 Route::get('/transaksi-detail/{id}', 'FrontEndController@detail')->name('profile.transaksi');
 Route::get('/page/search', 'FrontEndController@searchKlinik')->name('search-klinik');
-Route::get('/page/search_akupuntur', 'FrontEndController@searchAkupuntur')->name('search-akupuntur');
+//TODO LST
+Route::get('/page/search/{slug}', 'FrontEndController@searchAkupuntur')->name('search-akupuntur');
 Route::get('/page/search_pijat', 'FrontEndController@searchPijat')->name('search-pijat');
 Route::get('/page/search_bekam', 'FrontEndController@searchBekam')->name('search-bekam');
 Auth::routes();
