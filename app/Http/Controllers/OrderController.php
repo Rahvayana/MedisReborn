@@ -21,12 +21,13 @@ class OrderController extends Controller
         $data["klinik"] = DB::table('users')
             ->select(
                 'users.id',
-                'users.klinik_name',
-                'users.klinik_address',
-                'users.photo',
-                'users.klinik_open_close',
-                'users.klinik_time_per_day',
+                'clinics.klinik_name',
+                'clinics.klinik_address',
+                'clinics.photo',
+                'clinics.klinik_open_close',
+                'clinics.klinik_time_per_day',
             )
+            ->leftJoin('clinics','clinics.user_id','users.id')
             ->where('users.id', '=', $klinik_id)
             ->first();
 

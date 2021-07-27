@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Terapi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,6 +83,29 @@ class AdminController extends Controller
         }
         // dd($data);
         return view('backend.pasien.listpasien',$data);
+    }
+
+    public function terapi()
+    {
+        $data['terapis']=Terapi::all();
+        return view('backend.terapi.index',$data);
+    }
+    
+    public function terapiStore(Request $request)
+    {
+        // dd($request);
+        $file = $request->file('image');
+        $fileName=time().'.'.$file->getClientOriginalExtension();
+        if ($request->hasFile('image')) {
+            $path = public_path().'/uploads/terapi/';
+            // dd($path);
+            $file->move($path,$fileName);
+        }
+        $terapi=new Terapi();
+        $terapi->name=$request->terapi;
+        $terapi->image=$fileName;
+        $terapi->save();
+        return redirect()->route('terapi.list');
     }
 
 }

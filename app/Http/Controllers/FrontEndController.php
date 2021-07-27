@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Terapi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,22 +12,23 @@ class FrontEndController extends Controller
 {
     //
     public function index(){
-        $data=DB::select(DB::raw('SELECT 
-        id, 
-        (
-           3959 *
-           acos(cos(radians(37)) * 
-           cos(radians(latitude)) * 
-           cos(radians(longitude) - 
-           radians(-122)) + 
-           sin(radians(37)) * 
-           sin(radians(latitude )))
-        ) AS distance 
-        FROM clinics 
-        HAVING distance > 2 
-        ORDER BY distance LIMIT 0, 20;'));
+        // $data=DB::select(DB::raw('SELECT 
+        // id, 
+        // (
+        //    3959 *
+        //    acos(cos(radians(37)) * 
+        //    cos(radians(latitude)) * 
+        //    cos(radians(longitude) - 
+        //    radians(-122)) + 
+        //    sin(radians(37)) * 
+        //    sin(radians(latitude )))
+        // ) AS distance 
+        // FROM clinics 
+        // HAVING distance > 2 
+        // ORDER BY distance LIMIT 0, 20;'));
         // dd($data);
-        return view('frontend.index');
+        $data['terapis']=Terapi::all();
+        return view('frontend.index',$data);
     }
 
     public function auth()
@@ -56,25 +58,38 @@ class FrontEndController extends Controller
         return view('frontend.search_klinik');
     }
 
-    public function searchAkupuntur($slug) {
-        $data['kliniks'] = DB::table('users')
-            ->select(
-                'users.id',
-                'users.klinik_name',
-                'users.klinik_owner',
-                'users.klinik_owner_phone',
-                'users.klinik_address',
-                'users.photo',
-                'users.klinik_phone',
-                'users.klinik_therapist',
-                'users.klinik_open_close',
-                'users.klinik_time_per_day',
-                't.therapy_name',
-                't.price',
-            )->join('therapies as t', 't.user_id', '=', 'users.id')
-            ->where('t.therapy_name', '=', 'akupuntur')
-            ->get();
-            // dd($data);
+    public function search($slug) {
+        // dd($slug);
+        $data['kliniks']=DB::select(DB::raw('SELECT 
+            users.id,users.name,
+            users.email,
+            clinics.klinik_name,
+            clinics.klinik_owner,
+            clinics.klinik_owner_phone,
+            clinics.klinik_permission,
+            clinics.klinik_address,
+            clinics.photo,
+            clinics.klinik_phone,
+            clinics.klinik_therapist,
+            clinics.klinik_open_close,
+            clinics.klinik_time_per_day,
+            therapies.therapy_name,
+            therapies.price,
+            (3959 *
+           acos(cos(radians(37)) * 
+           cos(radians(latitude)) * 
+           cos(radians(longitude) - 
+           radians(-122)) + 
+           sin(radians(37)) * 
+           sin(radians(latitude )))
+        ) AS distance 
+        FROM users 
+        LEFT JOIN therapies ON users.id = therapies.user_id
+        LEFT JOIN clinics ON users.id = clinics.user_id
+        WHERE therapy_name ="'.$slug.'"
+        HAVING distance > 2 
+        ORDER BY distance LIMIT 0, 20;'));
+        // dd($data);
         return view('frontend.search_akupuntur', $data);
     }
 

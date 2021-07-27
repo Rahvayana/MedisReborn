@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Clinic;
 use App\Models\User;
 use App\Models\Therapy;
+use App\Terapi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,9 @@ class KlinikController extends Controller
     }
 
     public function add(){
-        return view('backend.klinik.create');
+        $data['terapis']=Terapi::all();
+        // dd($data);
+        return view('backend.klinik.create',$data);
     }
 
     public function save(Request $request){

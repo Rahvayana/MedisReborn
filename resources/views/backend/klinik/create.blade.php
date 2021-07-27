@@ -172,9 +172,21 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="int1">Pengobatan :</label>
-                            <input class="form-control" id="therapy-1" type="text" name="therapy[]" placeholder="" ><br>
-                            <input class="form-control" id="therapy-2" type="text" name="therapy[]" placeholder="" ><br>
-                            <input class="form-control" id="therapy-3" type="text" name="therapy[]" placeholder="" >
+                            <select name="therapy[]" id="therapy" class="form-control">
+                              @foreach ($terapis as $terapi)
+                              <option value="{{strtolower($terapi->name)}}">{{$terapi->name}}</option>
+                              @endforeach
+                            </select><br>
+                            <select name="therapy[]" id="therapy" class="form-control">
+                              @foreach ($terapis as $terapi)
+                              <option value="{{strtolower($terapi->name)}}">{{$terapi->name}}</option>
+                              @endforeach
+                            </select><br>
+                            <select name="therapy[]" id="therapy" class="form-control">
+                              @foreach ($terapis as $terapi)
+                              <option value="{{strtolower($terapi->name)}}">{{$terapi->name}}</option>
+                              @endforeach
+                            </select><br>
                         </div>
                     </div>
                     <div class="col-md-6">

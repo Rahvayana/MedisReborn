@@ -58,44 +58,71 @@
 </head>
 
 <body>
+    @php
+        $terapis=\App\Terapi::all();
+        // dd($terapis);
+    @endphp
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm ">
-        <h5 class="my-0 mr-md-auto font-weight-normal">MEDIS REBORN</h5>
-        <nav class="my-0 mr-md-auto font-weight-normal">
-            <a class="p-2 text-dark" href="{{route('landing')}}">Home</a>
-            <a class="p-2 text-dark" href="#">Layanan</a>
-            <a class="p-2 text-dark" href="#">Gabung Mitra Klinik</a>
-            <a class="p-2 text-dark" href="#">Tentang Kami</a>
-        </nav>
-            @guest
-                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-            @if (Route::has('register'))
-                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-            @endif
-            @else
-            <span class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }}
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
-            </span>
-            <span class="nav-item">
-                <a href="{{ route('profile') }}">
-                   Profile
-                </a>
-            </span>
-            @endguest
+        <h5>MEDIS REBORN</h5>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white" style="margin: auto">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('landing')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/gabung-mitra">Gabung Mitra Klinik</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/tentang-kami">Tentang Kami</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Layanan
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      @foreach ($terapis as $terapi)
+                      <a class="dropdown-item" href="{{ route('search-terapi',strtolower($terapi->name) ) }}">{{$terapi->name}}</a>
+                      @endforeach
+                  </div>
+                </li>
+              </ul>
+              @guest
+                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+              @if (Route::has('register'))
+                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+              @endif
+              @else
+              <span class="nav-item dropdown">
+                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false" v-pre>
+                      {{ Auth::user()->name }}
+                  </a>
+  
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                                   document.getElementById('logout-form').submit();">
+                          {{ __('Logout') }}
+                      </a>
+  
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                          @csrf
+                      </form>
+                  </div>
+              </span>
+              <span class="nav-item">
+                  <a href="{{ route('profile') }}">
+                     Profile
+                  </a>
+              </span>
+              @endguest
+            </div>
+          </nav>
     </div>
 
 <main role="main">

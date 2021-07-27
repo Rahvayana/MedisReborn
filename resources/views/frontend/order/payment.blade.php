@@ -27,13 +27,12 @@
 <div class="album py-5 bg-light">
 
     <div class="container">
-        <h1 class="m-3">Konfirmasi Pembayaran</h1>
+        <h1 class="m-3 text-center" >Konfirmasi Pembayaran</h1>
         <div class="row">
             <div class="col-12">
                 <div class="card p-4">
-
                     <form action="{{route('payment-save')}}" method="POST" class="form-horizontal">@csrf
-                        <div class="form-body">
+                        <div class="form-body" style="margin: auto; display: block;">
                             <input type="hidden" name="order_id" value="{{$order->id}}">
                             <fieldset class="form-group row">
                                 <label class="control-label text-right col-md-3 font-weight-bold">ID Pesanan</label>
@@ -113,7 +112,7 @@
                                 <div class="col-md-5">
                                 </div>
                                 <div class="col-md-5">
-                                    <button type="submit" class="btn btn-primary">Buat Pesanan</button>
+                                    <button type="submit" class="btn btn-primary">Update Pesanan</button>
                                 </div>
                             </fieldset>
 
