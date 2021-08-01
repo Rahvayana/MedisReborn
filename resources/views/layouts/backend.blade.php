@@ -107,7 +107,7 @@
                     </li>
                     <li class="treeview"> <a href="#"> <i class="fa  fa fa-id-badge"></i> <span>Terapi</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('terapi.list') }}">List Klinik</a></li>
+                            <li><a href="{{ route('terapi.list') }}">List Terapi</a></li>
                         </ul>
                     </li>
                     @endif

@@ -25,6 +25,7 @@ class CreateTableOrder extends Migration
             $table->date('tanggal_pengobatan');
             $table->string('jam_pengobatan')->nullable();
             $table->string('bukti_transfer')->nullable();
+            $table->string('pesan')->nullable();
             $table->integer('no_urut')->nullable();
             $table->index('order_id');
 

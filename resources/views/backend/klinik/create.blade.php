@@ -123,7 +123,7 @@
                     <div class="form-group">
                         <fieldset class="form-group">
                             <label>No Pembagian Waktu Perhari </label>
-                            <input class="form-control" id="klinik-time-per-day" type="text" name="time_per_day" placeholder="" required>
+                            <input class="form-control" id="klinik-time-per-day" max="13" type="text" name="time_per_day" placeholder="" required>
                         </fieldset>
                     </div>
                   </div>

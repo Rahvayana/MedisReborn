@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 
-<div class="album py-5 bg-light">
+<section id="hero" class="hero d-flex align-items-center">
     <div class="container">
 
         <div class="row">
@@ -10,6 +10,6 @@
             <p>&nbsp;</p>
         </div>
     </div>
-</div>
+</section>
 
 @endsection

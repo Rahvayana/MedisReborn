@@ -1,5 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
+<section id="pricing" class="pricing mt-5">
 <div class="album py-5 bg-light">
 <div class="container">
     <div class="row">
@@ -23,7 +24,7 @@
                         <td>{{$order->klinik_name}}</td>
                         <td>{{$order->tanggal_pengobatan}}</td>
                         <td>{{$order->jam_pengobatan}}</td>
-                        <td><span class="badge badge-success">{{$order->total_payment}}</span></td>
+                        <td>{{$order->total_payment}}</td>
                         <td><a href="{{ route('profile.transaksi', $order->id) }}" class="btn btn-outline-primary">Detail</a></td>
                     </tr> 
                     @endforeach
@@ -55,4 +56,5 @@
     </div>
 </div>
 </div>
+</section>
 @endsection

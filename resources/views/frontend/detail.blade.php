@@ -1,5 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
+<section id="pricing" class="pricing mt-5">
 <div class="album py-5 bg-light">
 <div class="container">
     <div class="row">
@@ -38,6 +39,11 @@
                      <td>{{$order->no_urut}}</td>
                  </tr>
                  <tr>
+                     <td>Pesan</td>
+                     <td>:</td>
+                     <td>{{$order->pesan}}</td>
+                 </tr>
+                 <tr>
                      <td><a href="{{ route('admin.transaksi.confirm',$order->id) }}" class="btn btn-primary">Konfirmasi</a></td>
                  </tr>
              </table>
@@ -46,4 +52,5 @@
      </div>
 </div>
 </div>
+</section>
 @endsection

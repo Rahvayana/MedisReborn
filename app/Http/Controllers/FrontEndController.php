@@ -28,6 +28,7 @@ class FrontEndController extends Controller
         // ORDER BY distance LIMIT 0, 20;'));
         // dd($data);
         $data['terapis']=Terapi::all();
+        
         return view('frontend.index',$data);
     }
 
@@ -58,8 +59,10 @@ class FrontEndController extends Controller
         return view('frontend.search_klinik');
     }
 
-    public function search($slug) {
-        // dd($slug);
+    public function search($slug,Request $request) {
+        // dd($request);
+        $latlong=explode(',',$request->latlong);
+        
         $data['kliniks']=DB::select(DB::raw('SELECT 
             users.id,users.name,
             users.email,
@@ -75,20 +78,13 @@ class FrontEndController extends Controller
             clinics.klinik_time_per_day,
             therapies.therapy_name,
             therapies.price,
-            (3959 *
-           acos(cos(radians(37)) * 
-           cos(radians(latitude)) * 
-           cos(radians(longitude) - 
-           radians(-122)) + 
-           sin(radians(37)) * 
-           sin(radians(latitude )))
-        ) AS distance 
-        FROM users 
+            (3956 * 2 * ASIN(SQRT( POWER(SIN(( '.$latlong[0].' - latitude) *  pi()/180 / 2), 2) +COS( '.$latlong[0].' * pi()/180) * COS(latitude * pi()/180) * POWER(SIN(( '.$latlong[1].' - longitude) * pi()/180 / 2), 2) ))) as distance
+        FROM medisreborn.clinics  
+        LEFT JOIN users ON users.id = clinics.user_id
         LEFT JOIN therapies ON users.id = therapies.user_id
-        LEFT JOIN clinics ON users.id = clinics.user_id
         WHERE therapy_name ="'.$slug.'"
-        HAVING distance > 2 
-        ORDER BY distance LIMIT 0, 20;'));
+        having  distance <= 10000
+        order by distance LIMIT 0, 20;'));
         // dd($data);
         return view('frontend.search_akupuntur', $data);
     }

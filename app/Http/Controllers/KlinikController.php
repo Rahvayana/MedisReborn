@@ -106,6 +106,76 @@ class KlinikController extends Controller
             return redirect()->route('klinik');
     }
 
+    public function edit($id)
+    {
+        $data['klinik']=DB::table('users')
+        ->select('users.*',
+        'clinics.klinik_name',
+        'users.email', 'clinics.klinik_owner', 'clinics.klinik_owner_phone', 'clinics.klinik_permission',
+        'clinics.klinik_address',
+        'clinics.photo',
+        'clinics.user_id',
+        'clinics.klinik_phone',
+        'clinics.klinik_therapist',
+        'clinics.klinik_open_close',
+        'clinics.klinik_time_per_day',
+        'clinics.latitude',
+        'clinics.longitude',
+        )
+        ->leftJoin('clinics','users.id','clinics.user_id')
+        ->where('users.id',$id)->first();
+        $data['terapis']=Therapy::where('user_id',$data['klinik']->user_id)->get();
+        $data['terapis']=Terapi::all();
+        // dd($data);
+        return view('backend.klinik.edit',$data);
+    }
+
+    public function update(Request $request,$id)
+    {
+        // dd($request);
+        $folderPath = public_path('uploads/klinik/');
+
+        if ($request->hasFile('foto_klinik')) {
+            $file = $request->file('foto_klinik');
+            $fileName=time().'.'.$file->getClientOriginalExtension();
+            $path = public_path().'/uploads/klinik/';
+            // dd($path);
+            $file->move($path,$fileName);
+        }
+            $clinic=new Clinic();
+            $clinic=Clinic::where('user_id',$request->user_id)->first();
+            
+        if ($request->hasFile('foto_klinik')) {
+            $clinic->photo = 'klinik/' . $fileName;
+        }
+            $clinic->klinik_name = $request->klinik_name;
+            $clinic->klinik_owner = $request->owner_name;
+            $clinic->klinik_owner_phone = $request->owner_phone;
+            $clinic->klinik_permission = $request->permission;
+            $clinic->klinik_address = $request->address;
+            $clinic->klinik_phone = $request->klinik_phone;
+            $clinic->klinik_therapist = $request->therapiest;
+            $clinic->klinik_open_close = $request->open_close;
+            $clinic->klinik_time_per_day = $request->time_per_day;
+            $clinic->latitude = $request->latitude;
+            $clinic->longitude = $request->longitude;
+            $clinic->save();
+
+            $lengTp = count($request->therapy);
+            for ($i=0; $i < $lengTp ; $i++) {
+                // dd($request->therapy[$i] );
+                if($request->price[$i] != null && $request->therapy[$i] != null){
+                    $therapy = new Therapy();
+                    $therapy=Therapy::where('user_id',$request->user_id)->first();
+                    $therapy->price = $request->price[$i];
+                    $therapy->therapy_name = strtolower($request->therapy[$i]);
+                    $therapy->user_id = $request->user_id;
+                    $therapy->save();
+                }
+            }
+            return redirect()->route('klinik');
+    }
+
     public function laporan(Request $request)
     {
         // dd(date('Y-m-d', strtotime("-7 days")));
@@ -152,5 +222,12 @@ class KlinikController extends Controller
             // dd($data);
 
         return view('backend.admin.laporan',$data);
+    }
+
+    public function delete($id)
+    {
+        DB::table('users')->where('id',$id)->delete();
+        DB::table('clinics')->where('user_id',$id)->delete();
+        DB::table('therapis')->where('user_id',$id)->delete();
     }
 }

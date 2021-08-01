@@ -25,19 +25,22 @@ Auth::routes();
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/transaksi', 'AdminController@transaksi')->name('admin.transaksi');
 Route::get('/transaksi/{id}', 'AdminController@detail')->name('admin.detail');
-Route::get('/transaksi-confirm/{id}', 'AdminController@konfirmasi')->name('admin.transaksi.confirm');
+Route::post('/transaksi-confirm/{id}', 'AdminController@konfirmasi')->name('admin.transaksi.confirm');
 //......Klinik
 Route::get('/admin/klinik', 'KlinikController@index')->name('klinik');
 Route::get('/admin/klinik-detail/{id}', 'KlinikController@detail')->name('klinik.detail');
 Route::get('/admin/klinik/add', 'KlinikController@add')->name('klinik-add');
 Route::post('/admin/klinik/save', 'KlinikController@save')->name('klinik-save');
 Route::post('/admin/delete/klinik', 'KlinikController@delete');
-Route::get('/admin/detail/klinik/{id}', 'KlinikController@detail');
-Route::post('/admin/update/klinik', 'KlinikController@update');
+Route::get('/admin/detail/klinik/{id}', 'KlinikController@edit')->name('klinik.edit');
+Route::post('/admin/update/klinik/{id}', 'KlinikController@update')->name('klinik.update');
+Route::post('/admin/delete/klinik/{id}', 'KlinikController@delete');
 
 //Terapi
 Route::get('/admin/terapi', 'AdminController@terapi')->name('terapi.list');
 Route::post('/admin/terapi-store', 'AdminController@terapiStore')->name('terapi.store');
+Route::post('/admin/terapi-update/{id}', 'AdminController@terapiUpdate')->name('terapi.update');
+Route::post('/admin/terapi-delete/{id}', 'AdminController@delete')->name('terapi.delete');
 
 Route::get('tentang-kami', function () {
     return view('frontend.tentang');
@@ -62,7 +65,7 @@ Route::get('/profile', 'FrontEndController@profile')->name('profile');
 Route::get('/transaksi-detail/{id}', 'FrontEndController@detail')->name('profile.transaksi');
 Route::get('/page/search', 'FrontEndController@searchKlinik')->name('search-klinik');
 //TODO LST
-Route::get('/page/search/{slug}', 'FrontEndController@search')->name('search-terapi');
+Route::post('/page/search/{slug}', 'FrontEndController@search')->name('search-terapi');
 Route::get('/page/search_pijat', 'FrontEndController@searchPijat')->name('search-pijat');
 Route::get('/page/search_bekam', 'FrontEndController@searchBekam')->name('search-bekam');
 Auth::routes();

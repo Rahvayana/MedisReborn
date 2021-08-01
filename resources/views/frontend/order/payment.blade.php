@@ -23,14 +23,14 @@
 </style>
 @endsection
 @section('content')
-
+<section id="pricing" class="pricing mt-5">
 <div class="album py-5 bg-light">
 
     <div class="container">
         <h1 class="m-3 text-center" >Konfirmasi Pembayaran</h1>
         <div class="row">
             <div class="col-12">
-                <div class="card p-4">
+                <div class="card p-4" style="margin:auto; display: block;">
                     <form action="{{route('payment-save')}}" method="POST" class="form-horizontal">@csrf
                         <div class="form-body" style="margin: auto; display: block;">
                             <input type="hidden" name="order_id" value="{{$order->id}}">
@@ -122,7 +122,7 @@
         </div>
     </div>
 </div>
-</div>
+</section>
 
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

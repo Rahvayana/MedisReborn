@@ -28,13 +28,7 @@
                         <td>{{$order->klinik_name}}</td>
                         <td>{{$order->tanggal_pengobatan}}</td>
                         <td>{{$order->jam_pengobatan}}</td>
-                        <td>
-                            @if ($order->bukti_transfer)
-                                Review Bukti TF
-                            @else
-                                Belum Ada Bukti TF
-                            @endif
-                        </td>
+                        <td>{{$order->total_payment}}</td>
                     </tr>
                     @endforeach
                 </tbody>

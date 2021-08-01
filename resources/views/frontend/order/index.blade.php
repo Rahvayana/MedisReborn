@@ -1,6 +1,13 @@
 @extends('layouts.frontend')
+@section('css')
+    <style>
+        fieldset{
+            margin: 20px;
+        }
+    </style>
+@endsection
 @section('content')
-<section class="jumbotron text-center">
+<section class="jumbotron text-center" style="margin-top: 100px;">
     <div class="container">
         <h1>Selamat Datang di Klinik {{$klinik->klinik_name}}</h1>
         <p class="lead text-muted">
@@ -28,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                    <form action="{{route('order-generate')}}" method="POST" class="form-horizontal">@csrf
+                    <form action="{{route('order-generate')}}" method="POST" class="form-horizontal" style="margin:25px;">@csrf
                         <div class="form-body">
                             <input type="hidden" name="klinik_id" value="{{$klinik->id}}">
                             <input type="hidden" name="klinik_name" value="{{$klinik->klinik_name}}">

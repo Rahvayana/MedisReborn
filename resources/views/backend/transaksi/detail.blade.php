@@ -43,9 +43,22 @@
                     <td>:</td>
                     <td>{{$order->no_urut}}</td>
                 </tr>
+                <form action="{{ route('admin.transaksi.confirm',$order->id) }}" method="POST">@csrf
                 <tr>
-                    <td><a href="{{ route('admin.transaksi.confirm',$order->id) }}" class="btn btn-primary">Konfirmasi</a></td>
+                    <td>
+                        <select name="review" id="review" class="form-control">
+                            <option value="Konfirmasi Pembayaran">Konfirmasi Pembayaran</option>
+                            <option value="Pembayaran Gagal">Pembayaran Gagal</option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea name="pesan" id="pesan" placeholder="Catatan Transaksi" class="form-control"></textarea>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" type="submit">Konfirmasi</button>
+                    </td>
                 </tr>
+                </form>
             </table>
         </div>
        </div>

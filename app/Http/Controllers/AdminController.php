@@ -49,11 +49,12 @@ class AdminController extends Controller
         return view('backend.transaksi.detail',$data);
     }
 
-    public function konfirmasi($id)
+    public function konfirmasi($id,Request $request)
     {
         $order=new Order();
         $order=Order::find($id);
-        $order->total_payment='Sukses';
+        $order->total_payment=$request->review;
+        $order->pesan=$request->pesan;
         $order->save();
         return back();
     }
@@ -106,6 +107,30 @@ class AdminController extends Controller
         $terapi->image=$fileName;
         $terapi->save();
         return redirect()->route('terapi.list');
+    }
+
+    public function terapiUpdate(Request $request,$id)
+    {
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName=time().'.'.$file->getClientOriginalExtension();
+            $path = public_path().'/uploads/terapi/';
+            // dd($path);
+            $file->move($path,$fileName);
+        }
+        $terapi=new Terapi();
+        $terapi=Terapi::find($id);
+        $terapi->name=$request->terapi;
+        if ($request->hasFile('image')) {
+            $terapi->image=$fileName;
+        }
+        $terapi->save();
+        return redirect()->route('terapi.list');
+    }
+
+    public function delete($id)
+    {
+        DB::table('terapis')->where('id',$id)->delete();
     }
 
 }
