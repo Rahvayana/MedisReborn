@@ -57,7 +57,6 @@
 
 
 <script>
-  $( document ).ready(function() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
       } else { 
@@ -65,10 +64,14 @@
       }
 
     function showPosition(position) {
-      $("#latlong").val(position.coords.latitude+","+position.coords.longitude)
-      console.log(position.coords.latitude+","+position.coords.longitude)
+      $( "input#latlong" ).val(position.coords.latitude+","+position.coords.longitude)
+      // $("#latlong").each(function() {
+      //     // $(this).val(position.coords.latitude+","+position.coords.longitude)
+      //     // $("#latlong").val(position.coords.latitude+","+position.coords.longitude)
+      //     console.log("1")
+
+      // });
       
     }
-});
 </script>
 @endsection
