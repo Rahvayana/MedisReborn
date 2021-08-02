@@ -38,6 +38,35 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Terapi</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('terapi.store') }}" method="POST" enctype="multipart/form-data">@csrf
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Jenis Terapi</label>
+                  <input type="text" name="terapi" class="form-control" id="exampleInputEmail1" placeholder="Jenis Terapi">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Image</label>
+                  <input type="file" name="image" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
 @foreach ($terapis as $key=>$terapi)
 <div class="modal fade" id="update-terapi{{$key}}" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
