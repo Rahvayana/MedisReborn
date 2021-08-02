@@ -62,7 +62,11 @@
                             <td>Rp. {{number_format($sum)}}</td>
                             <td>-7%</td>
                             <td>:</td>
+                            @if (Auth::user()->role=='KLINIK')
                             <td>Rp. {{number_format($sum-($sum*0.07))}}</td>
+                            @else
+                            <td>Rp. {{number_format(($sum*0.07))}}</td>
+                            @endif
                         </tr>
                         </tbody>
                     </table>

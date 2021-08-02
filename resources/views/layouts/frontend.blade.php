@@ -35,7 +35,17 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
+<style>
+  .btn-dropdown{
+    padding: 10px 20px;
+    font-size: 15px;
+    text-transform: none;
+    font-weight: 600;
+    border: 0px;
+    background-color: white;
+    color: #5969F3;
+  }
+</style>
 @yield('css')
 
 <body>
@@ -61,7 +71,11 @@
           <li class="dropdown"><a href="#"><span>Layanan Kami</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
                 @foreach ($terapis as $terapi)
-                      <li><a href="{{ route('search-terapi',strtolower($terapi->name) ) }}">{{$terapi->name}}</a></li>
+                <form action="{{ route('search-terapi',strtolower($terapi->name)) }}" method="POST">@csrf
+                  <input type="hidden" name="latlong" id="latlong">
+                  <button type="submit" class="btn-dropdown" style="width: 100%">{{$terapi->name}}</a>
+                </form>
+                      {{-- <li><a href="{{ route('search-terapi',strtolower($terapi->name) ) }}">{{$terapi->name}}</a></li> --}}
                 @endforeach
             </ul>
           </li>
@@ -157,6 +171,24 @@
 
 <!-- v4.0.0-alpha.6 -->
 <script src="{{URL::asset('backend')}}/bootstrap/js/bootstrap.min.js"></script>
+<script>
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+
+function showPosition(position) {
+  $( "input#latlong" ).val(position.coords.latitude+","+position.coords.longitude)
+  // $("#latlong").each(function() {
+  //     // $(this).val(position.coords.latitude+","+position.coords.longitude)
+  //     // $("#latlong").val(position.coords.latitude+","+position.coords.longitude)
+  //     console.log("1")
+
+  // });
+  
+}
+</script>
 @yield('js')
 </body>
 
