@@ -19,7 +19,6 @@
             <img id="foto" src="{{URL::asset('uploads')}}/{{$klinik->photo}}" class="img-fluid" alt="" width="200" height="200">
             <img src="assets/img/pricing-free.png" class="img-fluid" alt="">
             <ul>
-              <li>No telp: &nbsp; {{$klinik->klinik_phone}}</li>
               <li>Pemilik: &nbsp; {{$klinik->klinik_owner}}</li>
               <li>Harga: &nbsp; Rp. {{number_format($klinik->price)}}</li>
             </ul>

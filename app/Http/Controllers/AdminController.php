@@ -13,6 +13,9 @@ class AdminController extends Controller
 
     public function index()
     {
+        if(Auth::user()->role=='PASIEN'){
+            return redirect()->route('landing');
+        }
         if(Auth::user()->role=='ADMIN'){
             $data['today']=DB::table('orders')->whereDate('tanggal_pengobatan',date('Y-m-d'))->where('total_payment','Sukses')->count();
             $data['pasien']=DB::table('users')->where('role','PASIEN')->count();
@@ -27,17 +30,18 @@ class AdminController extends Controller
             $data['today']=DB::table('orders')->whereDate('tanggal_pengobatan',date('Y-m-d'))->where('total_payment','Sukses')->where('klinik_id',Auth::id())->count();
             $data['pasien']=DB::table('orders')->where('klinik_id',Auth::id())->count();
             $data['transaksi']=DB::table('orders')->where('total_payment','Sukses')->where('klinik_id',Auth::id())->sum('therapy_price');
-
+            
             $data['olds']=DB::table('orders')->whereDate('tanggal_pengobatan','<',date('Y-m-d'))->where('total_payment','Sukses')->where('klinik_id',Auth::id())->get();
             $data['days']=DB::table('orders')->whereDate('tanggal_pengobatan',date('Y-m-d'))->where('total_payment','Sukses')->where('klinik_id',Auth::id())->get();
             $data['soons']=DB::table('orders')->whereDate('tanggal_pengobatan','>',date('Y-m-d'))->where('total_payment','Sukses')->where('klinik_id',Auth::id())->get();
+            // dd($data);
             return view('backend.klinik.admin',$data);
         }
     }
 
     public function transaksi()
     {
-        $data['orders']=Order::all();
+        $data['orders']=Order::orderBy('updated_at','DESC')->get();
         // dd($data);
         return view('backend.transaksi.index',$data);
     }
@@ -55,6 +59,7 @@ class AdminController extends Controller
         $order=Order::find($id);
         $order->total_payment=$request->review;
         $order->pesan=$request->pesan;
+        $order->total_payment='Sukses';
         $order->save();
         return back();
     }

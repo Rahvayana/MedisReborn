@@ -25,7 +25,7 @@
                         <td>{{$order->tanggal_pengobatan}}</td>
                         <td>{{$order->jam_pengobatan}}</td>
                         <td>{{$order->total_payment}}</td>
-                        <td><a href="{{ route('profile.transaksi', $order->id) }}" class="btn btn-outline-primary">Detail</a></td>
+                        <td><a href="{{ route('payment-order', $order->order_id) }}" class="btn btn-outline-primary">Detail</a></td>
                     </tr> 
                     @endforeach
                 </tbody>

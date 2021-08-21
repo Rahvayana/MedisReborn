@@ -6,7 +6,9 @@
     <div class="row">
         <div class="col-md-12">
          <div class="card">
+             @if ($order->bukti_transfer)
              <img src="{{URL::asset('uploads')}}/{{$order->bukti_transfer}}" width="100%" alt="Profile User" style="display: block; margin: auto">
+             @endif
              <table class="table">
                  <tr>
                      <td>Nama Pasien</td>
@@ -43,9 +45,22 @@
                      <td>:</td>
                      <td>{{$order->pesan}}</td>
                  </tr>
-                 <tr>
-                     <td><a href="{{ route('admin.transaksi.confirm',$order->id) }}" class="btn btn-primary">Konfirmasi</a></td>
-                 </tr>
+                 @if (!$order->bukti_transfer)
+                 <fieldset class="form-group row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="text-black">Upload Foto Klinik</h4>
+                                <label for="input-file-max-fs">Your so fresh input file</label>
+                                <input type="file" class="image dropify" id="fileInput" accept="image/*" name="foto_klinik" required
+                                data-max-file-size="2M" />
+                                <input type="hidden" name="iconMerk" id="iconMerk" />
+
+                            </div>
+                        </div>
+                    </div>
+                </fieldset> 
+                 @endif
              </table>
          </div>
         </div>

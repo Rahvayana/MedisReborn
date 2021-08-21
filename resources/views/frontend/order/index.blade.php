@@ -13,7 +13,6 @@
         <p class="lead text-muted">
            Alamat: {{$klinik->klinik_address}} <br>
             buka: <strong class="font-weight-bold">{{$klinik->klinik_open_close}} </strong>
-            jam: <strong class="font-weight-bold">{{$klinik->klinik_time_per_day}}</strong>
     </div>
 </section>
 

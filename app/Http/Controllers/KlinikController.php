@@ -16,21 +16,28 @@ class KlinikController extends Controller
 {
     //
     public function index(){
-        $data['kliniks'] = DB::table('users')
-            ->select('users.id',
-            'clinics.klinik_name',
-            'users.email', 'clinics.klinik_owner', 'clinics.klinik_owner_phone', 'clinics.klinik_permission',
-            'clinics.klinik_address',
-            'clinics.photo',
-            'clinics.klinik_phone',
-            'clinics.klinik_therapist',
-            'clinics.klinik_open_close',
-            'clinics.klinik_time_per_day',
-            )
-            ->leftJoin('clinics','users.id','clinics.user_id')
-            ->where('users.role', '=','KLINIK' )
-            ->get();
-        return view('backend.klinik.index', $data);
+        if(Auth::user()->role=='ADMIN'){
+            $data['kliniks'] = DB::table('users')
+                ->select('users.id',
+                'clinics.klinik_name',
+                'users.email', 'clinics.klinik_owner', 'clinics.klinik_owner_phone', 'clinics.klinik_permission',
+                'clinics.klinik_address',
+                'clinics.photo',
+                'clinics.klinik_phone',
+                'clinics.klinik_therapist',
+                'clinics.klinik_open_close',
+                'clinics.klinik_time_per_day',
+                )
+                ->leftJoin('clinics','users.id','clinics.user_id')
+                ->where('users.role', '=','KLINIK' )
+                ->get();
+            return view('backend.klinik.index', $data);
+        }elseif(Auth::user()->role=='KLINIK'){
+            // echo "ME"; die;
+            return redirect()->route('laporan.keuangan');
+        }else{
+            return redirect()->route('landing');
+        }
     }
 
     public function detail($id)
