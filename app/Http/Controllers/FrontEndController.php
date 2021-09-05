@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use App\Terapi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,16 @@ class FrontEndController extends Controller
         $data['orders']=Order::where('user_id',Auth::id())->get();
         // dd($data);
         return view('frontend.user',$data);
+    }
+
+    public function updateprofile(Request $request)
+    {
+        $user=new User();
+        $user=User::find(Auth::id());
+        $user->name=$request->name;
+        $user->save();
+        return redirect()->route('profile');
+
     }
 
     public function detail($id)

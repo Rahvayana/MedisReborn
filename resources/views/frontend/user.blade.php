@@ -24,7 +24,13 @@
                         <td>{{$order->klinik_name}}</td>
                         <td>{{$order->tanggal_pengobatan}}</td>
                         <td>{{$order->jam_pengobatan}}</td>
-                        <td>{{$order->total_payment}}</td>
+                        <td>
+                            @if ($order->bukti_transfer)
+                                {{$order->total_payment}}
+                            @else
+                                Upload Bukti Pembayaran
+                            @endif
+                        </td>
                         <td><a href="{{ route('payment-order', $order->order_id) }}" class="btn btn-outline-primary">Detail</a></td>
                     </tr> 
                     @endforeach
@@ -33,25 +39,28 @@
         </div>
         <div class="col-md-12">
             <h3>Profile</h3>
+            <form action="{{ route('profile.update') }}" method="POST">@csrf
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" value="{{$user->name}}">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{$user->name}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" readonly class="form-control" id="email" value="{{$user->email}}">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" value="{{$user->email}}">
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary" type="submit">Update</button>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <button class="btn btn-primary">Update</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

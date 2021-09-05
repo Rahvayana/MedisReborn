@@ -193,7 +193,6 @@
 
         $modal.on('shown.bs.modal', function () {
             cropper = new Cropper(image, {
-                aspectRatio: 16 / 4,
                 viewMode: 3,
                 preview: '.preview'
             });

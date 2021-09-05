@@ -62,6 +62,7 @@ Route::get('/check', 'FrontEndController@auth')->name('auth');
 // FrontEnd
 Route::get('/', 'FrontEndController@index')->name('landing');
 Route::get('/profile', 'FrontEndController@profile')->name('profile');
+Route::post('/profile', 'FrontEndController@updateprofile')->name('profile.update');
 Route::get('/transaksi-detail/{id}', 'FrontEndController@detail')->name('profile.transaksi');
 Route::get('/page/search', 'FrontEndController@searchKlinik')->name('search-klinik');
 //TODO LST
