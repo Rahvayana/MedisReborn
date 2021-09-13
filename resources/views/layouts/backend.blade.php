@@ -33,11 +33,11 @@
     <div class="wrapper boxed-wrapper">
         <header class="main-header">
             <!-- Logo -->
-            <a href="index.html" class="logo blue-bg">
+            <a href="{{ route('admin') }}" class="logo blue-bg">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><img src="{{URL::asset('backend')}}/img/logo-n-blue.png" alt=""></span>
+                <span class="logo-mini"><img src="{{URL::asset('backend')}}/img/medis_reborn.png" alt=""></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><img src="{{URL::asset('backend')}}/img/logo-blue.png" alt=""></span>
+                <span class="logo-lg"><img src="{{URL::asset('backend')}}/img/medis_reborn.png" alt=""></span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar blue-bg navbar-static-top">

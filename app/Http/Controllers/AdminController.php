@@ -61,7 +61,7 @@ class AdminController extends Controller
         $order->pesan=$request->pesan;
         $order->total_payment='Sukses';
         $order->save();
-        return back();
+        return redirect()->route('admin.transaksi');
     }
 
     public function pasien()

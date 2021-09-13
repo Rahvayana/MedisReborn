@@ -11,7 +11,11 @@
     <div class="row">
        <div class="col-md-12">
         <div class="card">
+            @if ($order->bukti_transfer)
             <img src="{{URL::asset('uploads')}}/{{$order->bukti_transfer}}" width="100%" alt="Profile User" style="display: block; margin: auto">
+            @else
+            <h1 style="text-align: center">Belum ada Bukti Transaksi</h1>
+            @endif
             <table class="table">
                 <tr>
                     <td>Nama Pasien</td>
