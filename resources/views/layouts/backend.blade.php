@@ -113,7 +113,9 @@
                     @endif
                     <li class="treeview"> <a href="#"> <i class="fa  fa-stethoscope"></i> <span>Pasien</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="treeview-menu">
+                            @if (Auth::user()->role!='ADMIN')
                             <li><a href="{{ route('pasien.list') }}">List Pasien</a></li>
+                            @endif
                             @if (Auth::user()->role=='KLINIK')
                             <li><a href="{{ route('laporan.keuangan') }}">Laporan Keuangan</a></li>
                             @endif
