@@ -47,6 +47,7 @@
                     <td>:</td>
                     <td>{{$order->no_urut}}</td>
                 </tr>
+                @if (Auth::user()->role=='ADMIN')
                 <form action="{{ route('admin.transaksi.confirm',$order->id) }}" method="POST">@csrf
                 <tr>
                     <td>
@@ -63,6 +64,7 @@
                     </td>
                 </tr>
                 </form>
+                @endif
             </table>
         </div>
        </div>
